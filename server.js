@@ -8,10 +8,10 @@ const cookieParser = require("cookie-parser");
 const app = express();
 connectDB();
 const corsOptions = {
-  origin: 'marvelous-nougat-fb7e17.netlify.app',  // Allow requests only from your frontend origin
+  origin: 'https://marvelous-nougat-fb7e17.netlify.app',  // ✅ Include https://
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,  // Allow cookies/credentials to be sent
+  credentials: true,  // ✅ Required if you send cookies or use sessions
 };
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
