@@ -7,11 +7,23 @@ const cookieParser = require("cookie-parser");
 
 const app = express();
 connectDB();
+
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://marvelous-nougat-fb7e17.netlify.app'
+];
 const corsOptions = {
-  origin: 'https://marvelous-nougat-fb7e17.netlify.app',  // ✅ Include https://
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps, curl, Postman)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,  // ✅ Required if you send cookies or use sessions
+  credentials: true,
 };
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
